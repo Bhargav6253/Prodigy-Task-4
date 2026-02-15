@@ -1,0 +1,42 @@
+This project demonstrates a controlled keystroke logging simulation that records user input within the application interface. 
+It is developed strictly for educational purposes to understand how keylogging mechanisms work and to study cybersecurity defense strategies.
+
+
+import tkinter as tk
+from datetime import datetime
+
+LOG_FILE = "demo_log.txt"
+
+def log_text():
+    text = entry.get()
+    if text.strip() == "":
+        return
+
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    with open(LOG_FILE, "a") as f:
+        f.write(f"[{timestamp}] {text}\n")
+
+    entry.delete(0, tk.END)
+    status_label.config(text="Input logged successfully!")
+
+root = tk.Tk()
+root.title("Educational Input Logger")
+root.geometry("400x200")
+
+warning_label = tk.Label(
+    root,
+    text="This logs ONLY what you type here (Educational Purpose).",
+    fg="red"
+)
+warning_label.pack(pady=10)
+
+entry = tk.Entry(root, width=40)
+entry.pack(pady=10)
+
+log_button = tk.Button(root, text="Log Input", command=log_text)
+log_button.pack(pady=5)
+
+status_label = tk.Label(root, text="")
+status_label.pack()
+
+root.mainloop()
